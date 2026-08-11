@@ -166,7 +166,7 @@
     font-size:1.05rem;
   }
 
-  /* ---------- GALLERY (scatter, overlapping real photos) ---------- */
+  /* ---------- GALLERY ---------- */
   .gallery-wrap{background:var(--cream-deep);}
   .gallery{
     max-width:100%;
@@ -205,8 +205,6 @@
   .photo-item:nth-child(6n+4){transform:rotate(8deg) translateY(-6px); z-index:2;}
   .photo-item:nth-child(6n+5){transform:rotate(-6deg) translateY(16px); z-index:1;}
   .photo-item:nth-child(6n+6){transform:rotate(5deg) translateY(-10px); z-index:3;}
-
-  /* shown automatically if a photo fails to load, e.g. before you've added your own files */
   .photo-item.missing img{opacity:0;}
   .photo-item.missing::after{
     content:attr(data-hint);
@@ -254,7 +252,7 @@
     cursor:pointer;
   }
 
-  /* ---------- WISHES (photo stack, click to flip through) ---------- */
+  /* ---------- WISHES ---------- */
   #WishSection{
         background:repeating-linear-gradient(45deg, var(--cream) 0 20px, #e7c46c 20px 30px);
   }
@@ -341,15 +339,146 @@
     transform: translateX(-50%);
     pointer-events: none;
   }
+
+  /* ---------- SECRET CODE ---------- */
+  .secret-wrap{
+    text-align:center;
+    padding:50px 20px 70px;
+    background:var(--cream);
+  }
+  .secret-wrap p{
+    font-family:'Kalam',cursive;
+    color:var(--choc-soft);
+    margin:0 0 16px;
+  }
+  .secret-btn{
+    font-family:'Quicksand',sans-serif;
+    font-weight:700;
+    background:var(--paper);
+    border:2px dashed var(--choc-soft);
+    color:var(--choc);
+    padding:14px 30px;
+    border-radius:40px;
+    cursor:pointer;
+    font-size:1rem;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .secret-btn:hover{background:var(--sun); transform:translateY(-2px);}
+
+  .secret-overlay{
+    position:fixed; inset:0;
+    background:rgba(74,53,36,.6);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:70;
+    padding:20px;
+  }
+  .secret-overlay.open{display:flex;}
+  .secret-box{
+    padding:30px 26px;
+    max-width:340px;
+    width:100%;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.5);
+    text-align:center;
+    background:repeating-linear-gradient(45deg, var(--cream) 0 10px, var(--cream-deep) 10px 20px);
+  }
+  .secret-box p{
+    font-family:'Kalam',cursive;
+    font-size:1.1rem;
+    color:var(--choc);
+    margin:0 0 14px;
+  }
+  .secret-input{
+    width:100%;
+    padding:11px 12px;
+    font-family:'Quicksand',sans-serif;
+    font-size:1.05rem;
+    border:2px solid var(--choc-soft);
+    border-radius:8px;
+    margin-bottom:14px;
+    text-align:center;
+    box-sizing:border-box;
+    background:var(--cream);
+    color:var(--choc);
+  }
+  .secret-input.shake{animation:secretShake .4s;}
+  @keyframes secretShake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-8px);}
+    75%{transform:translateX(8px);}
+  }
+  .secret-actions{display:flex; gap:10px; justify-content:center;}
+  .secret-submit{
+    background:var(--coral-deep);
+    color:var(--paper);
+    border:none;
+    padding:10px 22px;
+    border-radius:20px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:'Quicksand',sans-serif;
+  }
+  .secret-cancel{
+    background:none;
+    border:none;
+    color:var(--choc-soft);
+    cursor:pointer;
+    text-decoration:underline;
+    font-family:'Quicksand',sans-serif;
+  }
+  .secret-error{
+    color:#c0392b;
+    font-family:'Kalam',cursive;
+    margin-top:12px;
+    display:none;
+  }
+  .secret-error.show{display:block;}
+
+  .secret-note-overlay{
+    position:fixed; inset:0;
+    background:rgba(74,53,36,.68);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:71;
+    padding:20px;
+  }
+  .secret-note-overlay.open{display:flex;}
+  .secret-note-box{
+    position:relative;
+    background:var(--paper);
+    padding:36px 30px;
+    max-width:440px;
+    width:100%;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.5);
+    border:3px dashed var(--sun-deep);
+  }
+  .secret-note-box p{
+    font-family:'Kalam',cursive;
+    font-size:1.2rem;
+    line-height:1.6;
+    color:var(--choc);
+    margin:0;
+    white-space:pre-line;
+  }
+  .secret-note-close{
+    position:absolute;
+    top:8px; right:10px;
+    background:none;
+    border:none;
+    font-size:1.3rem;
+    line-height:1;
+    color:var(--choc-soft);
+    cursor:pointer;
+    padding:6px;
+  }
 </style>
 </head>
 <body>
 
 <!-- ============ HERO ============ -->
 <section class="hero">
-
   <h1 class="title" style="margin-top: -20%;"><i style="margin-left: -15%;">Sto lat</i>,<br><span class="accent">ミ★ Dom P! ★彡</span></h1>
-  <p class="subtitle">Kilka słów i wspomnień, za które ciebie uwielbiamy!</p>
+  <p class="subtitle">Kilka słów i wspomnień o Tobie, za które Cię uwielbiamy!</p>
 
   <div class="balloons" aria-hidden="true">
     <div class="balloon b1"></div>
@@ -366,29 +495,28 @@
 <section>
   <div class="section-head">
     <h2>Kilka zdjęć</h2>
-    <p>Kliknij, żeby powiększyć.</p>
+    <p>Wspomnienia za które dziękujemy!</p>
   </div>
   <div class="gallery" id="gallery">
-    <!-- Podmień ścieżki src na swoje pliki, np. photos/zdjecie-1.jpg -->
-    <button class="photo-item" data-hint="Wklej tu: photos/zdjecie-1.jpg">
+    <button class="photo-item">
       <img src="photos/zdjecie-1.jpg" alt="Zdjęcie 1" onerror="this.closest('.photo-item').classList.add('missing')">
     </button>
-    <button class="photo-item" data-hint="Wklej tu: photos/zdjecie-2.jpg">
+    <button class="photo-item">
       <img src="photos/zdjecie-2.jpg" alt="Zdjęcie 2" onerror="this.closest('.photo-item').classList.add('missing')">
     </button>
-    <button class="photo-item" data-hint="Wklej tu: photos/zdjecie-3.jpg">
+    <button class="photo-item">
       <img src="photos/zdjecie-3.jpg" alt="Zdjęcie 3" onerror="this.closest('.photo-item').classList.add('missing')">
     </button>
-    <button class="photo-item" data-hint="Wklej tu: photos/zdjecie-4.jpg">
+    <button class="photo-item">
       <img src="photos/zdjecie-4.jpg" alt="Zdjęcie 4" onerror="this.closest('.photo-item').classList.add('missing')">
     </button>
-    <button class="photo-item" data-hint="Wklej tu: photos/zdjecie-5.jpg">
+    <button class="photo-item">
       <img src="photos/zdjecie-5.jpg" alt="Zdjęcie 5" onerror="this.closest('.photo-item').classList.add('missing')">
     </button>
-    <button class="photo-item" data-hint="Wklej tu: photos/zdjecie-6.jpg">
+    <button class="photo-item">
       <img src="photos/zdjecie-6.jpg" alt="Zdjęcie 6" onerror="this.closest('.photo-item').classList.add('missing')">
     </button>
-        <button class="photo-item" data-hint="Wklej tu: photos/zdjecie-7.jpg">
+        <button class="photo-item">
       <img src="photos/zdjecie-7.jpg" alt="Zdjęcie 7" onerror="this.closest('.photo-item').classList.add('missing')">
     </button>
   </div>
@@ -399,10 +527,9 @@
 <section id="WishSection">
   <div class="section-head">
     <h2>Życzenia</h2>
-    <p>Od ludzi, którzy Cię znają najlepiej. Kliknij stos, żeby zobaczyć kolejne.</p>
+    <p>Od ludzi, którzy Cię znają najlepiej!</p>
   </div>
   <div class="stack" id="wishStack">
-    <!-- Podmień ścieżki src na zdjęcia karteczek/życzeń, np. wishes/zyczenie-1.jpg -->
     <button class="stack-item">
       <img src="wishes/zyczenie-1.png" alt="Życzenie 1" onerror="this.closest('.stack-item').classList.add('missing')">
     </button>
@@ -422,24 +549,31 @@
   <p class="stack-hint">kliknij!</p>
 </section>
 
-<!-- ============ CAKE / CANDLES ============ -->
 <section class="cake-wrap">
-  <div class="section-head">
-    <h2>Zdmuchnij świeczki</h2>
-    <p>Pomyśl życzenie i kliknij każdy płomień.</p>
-  </div>
-
-  <div class="cake-scene">
-    
-  </div>
-
-  <p class="cake-hint" id="cakeHint">Zostało świeczek: <span id="candleCount">19</span></p>
-  <p class="cake-final" id="cakeFinal"></p>
 </section>
 
 <footer>
   <p>Wszystkiego najlepszego Dom P!</p>
+    <button class="secret-btn" id="secretBtn">?</button>
 </footer>
+
+<div class="secret-overlay" id="secretOverlay">
+  <div class="secret-box">
+    <p>Podaj kod</p>
+    <input type="text" id="secretInput" class="secret-input" autocomplete="off" placeholder="kod">
+    <div class="secret-actions">
+      <button class="secret-submit" id="secretSubmit">Sprawdź</button>
+    </div>
+  </div>
+</div>
+
+<div class="secret-note-overlay" id="secretNoteOverlay">
+  <div class="secret-note-box">
+    <button class="secret-note-close" id="secretNoteClose" aria-label="Zamknij">✕</button>
+
+    <p id="NotatkaText"></p>
+  </div>
+</div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
@@ -450,14 +584,13 @@
 </div>
 
 <script>
-  // ---- Lightbox ----
   const gallery = document.getElementById('gallery');
   const lightbox = document.getElementById('lightbox');
   const lightboxPhoto = document.getElementById('lightboxPhoto');
 
   gallery.querySelectorAll('.photo-item').forEach(card => {
     card.addEventListener('click', () => {
-      if(card.classList.contains('missing')) return; // nic do powiększenia jeszcze
+      if(card.classList.contains('missing')) return;
       const img = card.querySelector('img');
       lightboxPhoto.src = img.src;
       lightboxPhoto.alt = img.alt;
@@ -471,13 +604,12 @@
     if(e.target === lightbox) lightbox.classList.remove('open');
   });
 
-  // ---- Wish stack: click top card -> flies away, goes to the bottom ----
   const stack = document.getElementById('wishStack');
-  let stackOrder = Array.from(stack.querySelectorAll('.stack-item')); // last = top
+  let stackOrder = Array.from(stack.querySelectorAll('.stack-item'));
 
   function layoutStack(){
     stackOrder.forEach((item, i) => {
-      const fromTop = stackOrder.length - 1 - i; // 0 = top card
+      const fromTop = stackOrder.length - 1 - i; 
       item.style.zIndex = i + 1;
       item.style.transform = `rotate(${(fromTop % 2 === 0 ? -1 : 1) * (2 + fromTop * 1.5)}deg) translateY(${fromTop * -3}px)`;
       item.style.pointerEvents = fromTop === 0 ? 'auto' : 'none';
@@ -496,30 +628,7 @@
     }, 450);
   });
 
-  // ---- Candles ----
-  const flames = Array.from(document.querySelectorAll('.flame'));
-  const candleCountEl = document.getElementById('candleCount');
-  const cakeFinal = document.getElementById('cakeFinal');
-  let remaining = flames.length;
 
-  flames.forEach(flame => {
-    flame.addEventListener('click', () => {
-      if(flame.classList.contains('out')) return;
-      flame.classList.add('out');
-      const smoke = flame.previousElementSibling;
-      smoke.classList.remove('show');
-      void smoke.offsetWidth;
-      smoke.classList.add('show');
-      remaining--;
-      candleCountEl.textContent = remaining;
-      if(remaining === 0){
-        cakeFinal.textContent = 'Twoje życzenie się spełni! ✨';
-        burstConfetti();
-      }
-    });
-  });
-
-  // ---- Confetti ----
   const confettiColors = ['#FF7A5C','#FFC94A','#6FC3DF','#8FBF5A','#E85F42'];
   function burstConfetti(){
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -535,6 +644,46 @@
       piece.addEventListener('animationend', () => piece.remove());
     }
   }
+
+  const SECRET_CODE = "2308.";
+  const Notatka = "Hej"
+
+  const secretBtn = document.getElementById('secretBtn');
+  const secretOverlay = document.getElementById('secretOverlay');
+  const secretInput = document.getElementById('secretInput');
+  const secretSubmit = document.getElementById('secretSubmit');
+  const secretNoteOverlay = document.getElementById('secretNoteOverlay');
+  const secretNoteClose = document.getElementById('secretNoteClose');
+  const secretNoteText = document.getElementById('NotatkaText');
+
+  function openSecret(){
+    secretOverlay.classList.add('open');
+    secretInput.value = '';
+    setTimeout(() => secretInput.focus(), 50);
+  }
+  function closeSecret(){
+    secretOverlay.classList.remove('open');
+  }
+  secretBtn.addEventListener('click', openSecret);
+  secretOverlay.addEventListener('click', (e) => { if(e.target === secretOverlay) closeSecret(); });
+
+  function checkSecretCode(){
+    const value = secretInput.value.trim().toUpperCase();
+    if(value.length && value === SECRET_CODE.toUpperCase()){
+      closeSecret();
+      secretNoteOverlay.classList.add('open');
+      secretNoteText.innerText = Notatka;
+    } else {
+      secretInput.classList.remove('shake');
+      void secretInput.offsetWidth;
+      secretInput.classList.add('shake');
+    }
+  }
+  secretSubmit.addEventListener('click', checkSecretCode);
+  secretInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') checkSecretCode(); });
+
+  secretNoteClose.addEventListener('click', () => secretNoteOverlay.classList.remove('open'));
+  secretNoteOverlay.addEventListener('click', (e) => { if(e.target === secretNoteOverlay) secretNoteOverlay.classList.remove('open'); });
 </script>
 
 </body>
